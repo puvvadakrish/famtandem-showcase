@@ -1,0 +1,53 @@
+{
+  "name": "famtandem",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "build:local": "node scripts/with-local-supabase-env.mjs npm run build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:db:local": "node scripts/with-local-supabase-env.mjs vitest run --config vitest.live.config.ts tests/live/admin-retry-extraction-run-live.test.ts",
+    "test:extraction": "vitest run tests/unit/extraction-schema.test.ts tests/unit/extraction-fixtures.test.ts",
+    "test:extraction:live": "vitest run --config vitest.live.config.ts tests/live/gemini-extraction-live.test.ts",
+    "test:user-eval:hosted": "node scripts/hosted-user-eval.mjs",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "test:e2e:local": "node scripts/with-local-supabase-env.mjs npx playwright test --workers=2"
+  },
+  "dependencies": {
+    "@supabase/ssr": "^0.6.1",
+    "@supabase/supabase-js": "^2.49.8",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.468.0",
+    "next": "^15.1.0",
+    "posthog-js": "^1.203.1",
+    "posthog-node": "^4.8.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "server-only": "^0.0.1",
+    "tailwind-merge": "^2.5.5",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.10.1",
+    "@playwright/test": "^1.49.1",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.1.0",
+    "@types/node": "^22.10.2",
+    "@types/react": "^19.0.2",
+    "@types/react-dom": "^19.0.2",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^9.17.0",
+    "eslint-config-next": "^15.1.0",
+    "jsdom": "^25.0.1",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}

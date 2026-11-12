@@ -1,0 +1,1101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FamTandem Thin App Plan Review</title>
+  <style>
+    :root {
+      --ink: #18201d;
+      --muted: #617067;
+      --line: #d9e0da;
+      --paper: #fbfaf5;
+      --panel: #ffffff;
+      --green: #2f6f58;
+      --green-2: #e7f1eb;
+      --blue: #315f88;
+      --blue-2: #e8f0f7;
+      --gold: #9a681c;
+      --gold-2: #f8edd9;
+      --red: #9d3e35;
+      --red-2: #f8e5e1;
+      --shadow: 0 16px 40px rgba(24, 32, 29, 0.08);
+      --radius: 8px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, rgba(231, 241, 235, 0.75), rgba(251, 250, 245, 0) 320px),
+        var(--paper);
+      line-height: 1.45;
+    }
+
+    button, input {
+      font: inherit;
+    }
+
+    a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    a:hover { text-decoration: underline; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid rgba(217, 224, 218, 0.9);
+      background: rgba(251, 250, 245, 0.92);
+      backdrop-filter: blur(14px);
+    }
+
+    .topbar-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 12px 20px;
+      display: grid;
+      grid-template-columns: minmax(220px, 1fr) minmax(260px, 420px);
+      gap: 16px;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      min-width: 0;
+    }
+
+    .mark {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: var(--green);
+      background: var(--panel);
+      font-weight: 800;
+      flex: 0 0 auto;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.1;
+      letter-spacing: 0;
+    }
+
+    .brand p {
+      margin: 3px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .search {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      border-radius: 8px;
+      padding: 8px 10px;
+    }
+
+    .search span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .search input {
+      border: 0;
+      outline: 0;
+      background: transparent;
+      width: 100%;
+      color: var(--ink);
+      min-width: 0;
+    }
+
+    .shell {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 28px 20px 64px;
+      display: grid;
+      grid-template-columns: 270px minmax(0, 1fr);
+      gap: 24px;
+    }
+
+    .rail {
+      position: sticky;
+      top: 72px;
+      align-self: start;
+      display: grid;
+      gap: 14px;
+    }
+
+    .rail-box {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.78);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .rail-box h2 {
+      margin: 0;
+      padding: 14px 14px 8px;
+      font-size: 13px;
+      text-transform: uppercase;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+
+    .nav {
+      display: grid;
+      padding: 6px;
+    }
+
+    .nav a {
+      color: var(--ink);
+      padding: 9px 10px;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    .nav a:hover {
+      background: var(--green-2);
+      text-decoration: none;
+    }
+
+    .summary-list {
+      display: grid;
+      gap: 10px;
+      padding: 0 14px 14px;
+    }
+
+    .summary-item {
+      display: grid;
+      gap: 2px;
+    }
+
+    .summary-item strong {
+      font-size: 13px;
+    }
+
+    .summary-item span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .content {
+      display: grid;
+      gap: 22px;
+      min-width: 0;
+    }
+
+    .hero {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      padding: clamp(22px, 4vw, 36px);
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .hero h2 {
+      max-width: 820px;
+      margin: 0;
+      font-size: clamp(30px, 5vw, 52px);
+      line-height: 1.02;
+      letter-spacing: 0;
+    }
+
+    .hero-copy {
+      max-width: 760px;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .hero-actions {
+      margin-top: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--ink);
+      border-radius: 8px;
+      padding: 10px 13px;
+      cursor: pointer;
+      min-height: 42px;
+    }
+
+    .btn.primary {
+      border-color: var(--green);
+      background: var(--green);
+      color: white;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .section {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.82);
+      box-shadow: var(--shadow);
+      padding: 22px;
+    }
+
+    .section.hidden {
+      display: none;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: start;
+      margin-bottom: 18px;
+    }
+
+    .section h3 {
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: 0;
+    }
+
+    .section-intro {
+      margin: 6px 0 0;
+      color: var(--muted);
+      max-width: 720px;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 28px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      background: var(--panel);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .tag.good { color: var(--green); background: var(--green-2); border-color: #c7ddcf; }
+    .tag.warn { color: var(--gold); background: var(--gold-2); border-color: #efd8ad; }
+    .tag.risk { color: var(--red); background: var(--red-2); border-color: #efc7bf; }
+    .tag.info { color: var(--blue); background: var(--blue-2); border-color: #cbddec; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .tile {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      padding: 14px;
+      min-height: 116px;
+    }
+
+    .tile h4 {
+      margin: 0 0 8px;
+      font-size: 15px;
+    }
+
+    .tile p, .tile li {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .tile p {
+      margin: 0;
+    }
+
+    .tile ul {
+      margin: 0;
+      padding-left: 17px;
+    }
+
+    .loop {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      align-items: stretch;
+    }
+
+    .loop-step {
+      position: relative;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 14px;
+      background: var(--panel);
+    }
+
+    .loop-step:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      right: -12px;
+      top: 50%;
+      width: 14px;
+      height: 1px;
+      background: var(--line);
+    }
+
+    .loop-step strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .loop-step span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .phases {
+      display: grid;
+      gap: 12px;
+    }
+
+    .phase {
+      display: grid;
+      grid-template-columns: 78px minmax(0, 1fr);
+      gap: 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      padding: 14px;
+    }
+
+    .phase-number {
+      display: grid;
+      place-items: center;
+      align-self: start;
+      width: 58px;
+      height: 58px;
+      border-radius: 8px;
+      background: var(--green-2);
+      color: var(--green);
+      font-weight: 800;
+    }
+
+    .phase h4 {
+      margin: 0 0 6px;
+      font-size: 17px;
+    }
+
+    .phase p {
+      margin: 0 0 10px;
+      color: var(--muted);
+    }
+
+    details {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      overflow: hidden;
+    }
+
+    details + details {
+      margin-top: 10px;
+    }
+
+    summary {
+      cursor: pointer;
+      padding: 13px 14px;
+      font-weight: 750;
+    }
+
+    details[open] summary {
+      border-bottom: 1px solid var(--line);
+      background: var(--green-2);
+    }
+
+    .detail-body {
+      padding: 14px;
+      color: var(--muted);
+    }
+
+    .detail-body ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .matrix {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+    }
+
+    table {
+      border-collapse: collapse;
+      min-width: 760px;
+      width: 100%;
+      font-size: 14px;
+    }
+
+    th, td {
+      border-bottom: 1px solid var(--line);
+      padding: 11px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      background: #f6f7f2;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .checklist {
+      display: grid;
+      gap: 8px;
+    }
+
+    .check {
+      display: grid;
+      grid-template-columns: 24px minmax(0, 1fr);
+      gap: 10px;
+      align-items: start;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      border-radius: var(--radius);
+      padding: 10px;
+    }
+
+    .check input {
+      margin-top: 3px;
+      width: 16px;
+      height: 16px;
+      accent-color: var(--green);
+    }
+
+    .check span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .decision {
+      display: grid;
+      gap: 8px;
+    }
+
+    .decision-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      padding: 12px;
+    }
+
+    .decision-row strong {
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .decision-row span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .status-pill {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 6px 9px;
+      color: var(--green);
+      background: var(--green-2);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .note {
+      border-left: 4px solid var(--green);
+      background: var(--green-2);
+      padding: 13px 14px;
+      border-radius: 0 8px 8px 0;
+      color: #254338;
+    }
+
+    .sources {
+      display: grid;
+      gap: 8px;
+    }
+
+    .source-link {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      padding: 11px 12px;
+      color: var(--ink);
+    }
+
+    .source-link span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 900px) {
+      .topbar-inner,
+      .shell {
+        grid-template-columns: 1fr;
+      }
+
+      .rail {
+        position: static;
+        order: 2;
+      }
+
+      .content {
+        order: 1;
+      }
+
+      .grid,
+      .loop {
+        grid-template-columns: 1fr;
+      }
+
+      .loop-step:not(:last-child)::after {
+        display: none;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .topbar-inner,
+      .shell {
+        padding-left: 14px;
+        padding-right: 14px;
+      }
+
+      .hero,
+      .section {
+        padding: 18px;
+      }
+
+      .section-head,
+      .decision-row {
+        display: grid;
+      }
+
+      .phase {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="mark" aria-hidden="true">FT</div>
+        <div>
+          <h1>FamTandem Thin Real App Plan</h1>
+          <p>Interactive review of the May 19 implementation plan</p>
+        </div>
+      </div>
+      <label class="search">
+        <span>Search</span>
+        <input id="search" type="search" placeholder="Try SMS, Google, admin, risk, metrics">
+      </label>
+    </div>
+  </div>
+
+  <div class="shell">
+    <aside class="rail" aria-label="Plan navigation">
+      <div class="rail-box">
+        <h2>Jump To</h2>
+        <nav class="nav">
+          <a href="#recommendation">Recommendation</a>
+          <a href="#loop">Aha Loop</a>
+          <a href="#scope">Scope</a>
+          <a href="#architecture">Architecture</a>
+          <a href="#phases">Phases</a>
+          <a href="#review">Confirmed Decisions</a>
+          <a href="#risks">Risks</a>
+          <a href="#metrics">Metrics</a>
+          <a href="#sources">Sources</a>
+        </nav>
+      </div>
+
+      <div class="rail-box">
+        <h2>At A Glance</h2>
+        <div class="summary-list">
+          <div class="summary-item">
+            <strong>Best next step</strong>
+            <span>Engineering review is complete; reconcile Phase 0 follow-ups before Phase 1.</span>
+          </div>
+          <div class="summary-item">
+            <strong>Implementation trigger</strong>
+            <span>Next CE work should continue existing Phase 0, verify/fix follow-ups, then start Phase 1.</span>
+          </div>
+          <div class="summary-item">
+            <strong>Open decision</strong>
+            <span>Supabase Free + Vercel Cron is OK for v0/friends; review infra before broader cohort.</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="content">
+      <section class="hero searchable" id="recommendation" data-keywords="recommendation next step review refine technical review ce-work deepen plan">
+        <p class="eyebrow">Suggested next move</p>
+        <h2>Phase 0 has started. Verify the foundation before building Phase 1.</h2>
+        <p class="hero-copy">
+          The reviewed plan is ready to guide implementation, but the current scaffold needs a short reconciliation pass: build verification with env, protected real board routing, tighter membership bootstrap, and explicit job RPC privileges.
+        </p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#review">Review confirmed decisions</a>
+          <a class="btn" href="#phases">Scan build phases</a>
+          <a class="btn" href="2026-05-19-feat-thin-real-app-plan.md">Open markdown plan</a>
+        </div>
+      </section>
+
+      <section class="section searchable" id="loop" data-keywords="aha loop input card coverage accepted messy source-backed">
+        <div class="section-head">
+          <div>
+            <h3>Core Aha Loop</h3>
+            <p class="section-intro">The app should validate the first coverage loop clearly, then broaden from a stronger signal.</p>
+          </div>
+          <span class="tag good">Sequence first</span>
+        </div>
+        <div class="loop">
+          <div class="loop-step">
+            <strong>1. Input</strong>
+            <span>Parent forwards, uploads, or pastes real logistics chaos.</span>
+          </div>
+          <div class="loop-step">
+            <strong>2. Card</strong>
+            <span>FamTandem creates a source-backed coverage card.</span>
+          </div>
+          <div class="loop-step">
+            <strong>3. Ask</strong>
+            <span>Default parent asks someone to cover pickup, drop-off, or responsibility.</span>
+          </div>
+          <div class="loop-step">
+            <strong>4. Accepted</strong>
+            <span>The request is accepted and the board updates.</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section searchable" id="scope" data-keywords="scope included excluded v1 calendar organizer chores meal planning whatsapp">
+        <div class="section-head">
+          <div>
+            <h3>Scope Boundary</h3>
+            <p class="section-intro">The team can build the broader product. The v1 boundary keeps the learning signal clean while the first coverage loop proves value.</p>
+          </div>
+          <span class="tag warn">Keep signal clear</span>
+        </div>
+        <div class="grid">
+          <div class="tile">
+            <h4>Must Have</h4>
+            <ul>
+              <li>Household setup</li>
+              <li>Paste, upload, forwarded email intake</li>
+              <li>Needs Attention plus This Week board</li>
+              <li>Coverage asks and responses</li>
+              <li>User editing and admin correction</li>
+            </ul>
+          </div>
+          <div class="tile">
+            <h4>Important But Optional</h4>
+            <ul>
+              <li>Google Calendar connect/read/import</li>
+              <li>Daily unresolved nudge</li>
+              <li>Weekly coverage review</li>
+              <li>Admin cohort dashboard</li>
+            </ul>
+          </div>
+          <div class="tile">
+            <h4>Not V1</h4>
+            <ul>
+              <li>Chores, meals, groceries</li>
+              <li>Full chat</li>
+              <li>Native iOS</li>
+              <li>Whole-inbox Gmail scanning</li>
+              <li>Payment splitting</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section searchable" id="architecture" data-keywords="architecture nextjs supabase resend twilio gemini posthog google calendar database rls">
+        <div class="section-head">
+          <div>
+            <h3>Architecture Choices</h3>
+            <p class="section-intro">The plan optimizes for fast validation with real production rails, not a throwaway prototype.</p>
+          </div>
+          <div class="tag-row">
+            <span class="tag info">Next.js</span>
+            <span class="tag info">Supabase</span>
+            <span class="tag info">Gemini</span>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="tile">
+            <h4>App and Data</h4>
+            <p>Next.js App Router, TypeScript, Supabase Auth, Postgres, RLS, and private source artifact storage. Supabase Free is acceptable for v0/friends.</p>
+          </div>
+          <div class="tile">
+            <h4>Input and Messaging</h4>
+            <p>Resend inbound email, upload/paste intake, Twilio SMS action links, Resend email context, and Vercel Cron for simple job execution.</p>
+          </div>
+          <div class="tile">
+            <h4>AI and Metrics</h4>
+            <p>Gemini structured extraction with validation, correction trails, and PostHog validation events.</p>
+          </div>
+        </div>
+        <details>
+          <summary>Data model summary</summary>
+          <div class="detail-body">
+            <p>Core entities: households, members, children, source inputs, extraction runs, coverage cards, coverage slots, readiness items, coverage requests, responses, admin audit events, calendar connections, and jobs.</p>
+          </div>
+        </details>
+      </section>
+
+      <section class="section searchable" id="phases" data-keywords="phases implementation foundation manual board extraction requests calendar hardening">
+        <div class="section-head">
+          <div>
+            <h3>Implementation Phases</h3>
+            <p class="section-intro">The first two phases deliberately validate the board and data model before depending on AI extraction quality.</p>
+          </div>
+          <span class="tag good">Build order</span>
+        </div>
+        <div class="phases">
+          <div class="phase">
+            <div class="phase-number">0</div>
+            <div>
+              <h4>Product and Infra Foundation</h4>
+              <p>Scaffold app, auth, Supabase, RLS, storage, app shell, consent, PostHog, and protected Vercel Cron runner.</p>
+              <div class="tag-row"><span class="tag">Household exists</span><span class="tag">Sample board visible</span><span class="tag">Jobs process safely</span></div>
+            </div>
+          </div>
+          <div class="phase">
+            <div class="phase-number">1</div>
+            <div>
+              <h4>Manual Board Loop</h4>
+              <p>Build cards, slots, member/child setup, board attention/coverage logic, editing, and mark covered flow.</p>
+              <div class="tag-row"><span class="tag">Manual cards work</span><span class="tag">Owner required</span></div>
+            </div>
+          </div>
+          <div class="phase">
+            <div class="phase-number">2</div>
+            <div>
+              <h4>Input Pipeline and Extraction</h4>
+              <p>Paste, upload, forwarded email, source artifacts, Gemini extraction, source/confidence, admin correction.</p>
+              <div class="tag-row"><span class="tag">Real inputs become cards</span><span class="tag">Needs Review works</span></div>
+            </div>
+          </div>
+          <div class="phase">
+            <div class="phase-number">3</div>
+            <div>
+              <h4>Coverage Requests</h4>
+              <p>Twilio SMS, Resend context email, tokenized accept/decline links, split pickup/drop-off responses.</p>
+              <div class="tag-row"><span class="tag">No-account response</span><span class="tag">Accepted request updates board</span></div>
+            </div>
+          </div>
+          <div class="phase">
+            <div class="phase-number">4</div>
+            <div>
+              <h4>Calendar, Nudges, Cohort Readiness</h4>
+              <p>Optional Google Calendar connect/read/import, daily unresolved nudge, weekly review email, and cohort dashboard.</p>
+              <div class="tag-row"><span class="tag warn">Calendar optional</span><span class="tag">Cohort ops ready</span></div>
+            </div>
+          </div>
+          <div class="phase">
+            <div class="phase-number">5</div>
+            <div>
+              <h4>Hardening</h4>
+              <p>Accessibility, mobile QA, webhook validation, token safety, rate limiting, backups, privacy review.</p>
+              <div class="tag-row"><span class="tag risk">Do before external families</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section searchable" id="review" data-keywords="review questions decisions technical review deepen plan ce work next step">
+        <div class="section-head">
+          <div>
+            <h3>Confirmed Decisions</h3>
+            <p class="section-intro">These choices are now reflected in the markdown plan. The checkboxes are just a review aid for your browser session.</p>
+          </div>
+          <span class="tag good">Applied to plan</span>
+        </div>
+        <div class="checklist">
+          <label class="check">
+            <input type="checkbox" checked>
+            <span>Use Supabase as the v1 backend for auth, Postgres, RLS, and private source storage, while documenting an exit path.</span>
+          </label>
+          <label class="check">
+            <input type="checkbox" checked>
+            <span>Use Supabase Free plus Vercel Cron for v0/friends testing, with an infrastructure checkpoint before a broader external cohort.</span>
+          </label>
+          <label class="check">
+            <input type="checkbox" checked>
+            <span>Keep optional Google Calendar connect/read/import in v1; defer calendar write-back to milestone 1.5.</span>
+          </label>
+          <label class="check">
+            <input type="checkbox" checked>
+            <span>Constrain admin correction to source/extraction/card review, field edits, rerun extraction, and audit history.</span>
+          </label>
+          <label class="check">
+            <input type="checkbox" checked>
+            <span>Use stricter cohort consent: avoid detailed medical, financial, legal, custody, or highly sensitive records during early testing.</span>
+          </label>
+          <label class="check">
+            <input type="checkbox" checked>
+            <span>Treat Phase 3 as MVP validation complete: real input, generated card, uncovered slot, request sent, no-account acceptance, board update.</span>
+          </label>
+        </div>
+        <div class="note" style="margin-top:14px;">
+          My recommendation now: run the plan engineering technical review, then use that feedback to make one final patch before CE work.
+        </div>
+        <details style="margin-top:14px;" open>
+          <summary>Batch 1 applied: architecture and privacy</summary>
+          <div class="detail-body">
+            <ul>
+              <li>Token links use hashed tokens, short expiry, rate limits, state checks, and safe renewal.</li>
+              <li>External contacts are modeled separately from household members and snapshotted on requests.</li>
+              <li>Helper token pages show compact source summary and selected evidence excerpts, not full source artifacts by default.</li>
+              <li>Household admin and internal admin correction access are separate roles with audit events.</li>
+              <li>Provider webhooks use event ids/idempotency keys to avoid duplicate side effects.</li>
+            </ul>
+          </div>
+        </details>
+        <details style="margin-top:10px;" open>
+          <summary>Batch 2 applied: data model and state</summary>
+          <div class="detail-body">
+            <ul>
+              <li>Card type is separate from attention flags and computed coverage state.</li>
+              <li>Coverage slots use an explicit state machine: needs coverage, requested, accepted, declined, cancelled, covered external.</li>
+              <li>Detected changes create confirmation records before overwriting critical covered-event fields.</li>
+              <li>External owners can reuse external contacts while preserving free-form text snapshots.</li>
+              <li>Readiness items can have lightweight ownership/completion without becoming generic chores.</li>
+            </ul>
+          </div>
+        </details>
+        <details style="margin-top:10px;" open>
+          <summary>Batch 3 applied: testing and evals</summary>
+          <div class="detail-body">
+            <ul>
+              <li>Default stack: Vitest, Supabase local testing where practical, Playwright, and lightweight accessibility checks.</li>
+              <li>Gemini extraction gets fixture-based evals, not just JSON schema tests.</li>
+              <li>RLS, helper token scope, internal admin access, source artifacts, and token replay get explicit security tests.</li>
+              <li>Provider webhooks and the Vercel Cron job runner get contract/behavior tests.</li>
+              <li>CE work must create a QA test plan artifact for routes, flows, edge cases, mobile checks, and eval commands.</li>
+            </ul>
+          </div>
+        </details>
+        <details style="margin-top:10px;" open>
+          <summary>Batch 4 applied: performance and ops</summary>
+          <div class="detail-body">
+            <ul>
+              <li>V0/friends upload limits: 10 MB per file and 5 files per source input.</li>
+              <li>Large files should upload directly to Supabase Storage or signed upload flow; Next.js routes handle metadata only.</li>
+              <li>Vercel Cron upgrade triggers: backlog, p95 extraction time, timeout rate, stale locks, and processing delay.</li>
+              <li>Admin ops view includes job health, extraction counts, storage estimate, webhook failures, failed sends, and correction activity.</li>
+              <li>Pre-cohort quota/compliance checklist covers Supabase, Vercel, Resend, Twilio sender/A2P/opt-out/cost, and Gemini.</li>
+              <li>Analytics properties use internal ids/coarse buckets and exclude private family/source details.</li>
+            </ul>
+          </div>
+        </details>
+        <details style="margin-top:10px;" open>
+          <summary>Engineering review wrap-up added</summary>
+          <div class="detail-body">
+            <ul>
+              <li>Markdown plan now includes what already exists, NOT in scope, failure modes, and parallelization lanes.</li>
+              <li>Review summary records scope accepted as-is, four batches resolved, and CE work as the next likely step.</li>
+              <li>The HTML remains a dashboard; the markdown plan is the implementation contract.</li>
+            </ul>
+          </div>
+        </details>
+        <details style="margin-top:10px;" open>
+          <summary>Cursor delegation insight added</summary>
+          <div class="detail-body">
+            <ul>
+              <li>Cursor correctly noticed Phase 0 scaffold now exists; the plan was updated to reflect actual repo state.</li>
+              <li>Before Phase 1, verify local build with env and tighten auth/RLS/RPC foundations.</li>
+              <li>Next CE prompt should continue existing Phase 0 rather than recreate the scaffold.</li>
+            </ul>
+          </div>
+        </details>
+      </section>
+
+      <section class="section searchable" id="risks" data-keywords="risks privacy ai calendar sms deliverability duplicate admin correction sensitive family data">
+        <div class="section-head">
+          <div>
+            <h3>Risk Map</h3>
+            <p class="section-intro">The biggest risks are trust, sequencing, and integration edges, not whether the broader product can eventually be built.</p>
+          </div>
+          <span class="tag risk">High attention</span>
+        </div>
+        <div class="matrix">
+          <table>
+            <thead>
+              <tr>
+                <th>Risk</th>
+                <th>Why it matters</th>
+                <th>Mitigation in plan</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>AI extracts wrong details</td>
+                <td>Bad times or locations break trust immediately.</td>
+                <td>Source visibility, confidence, Needs Review, user editing, admin correction.</td>
+              </tr>
+              <tr>
+                <td>Sensitive family data exposure</td>
+                <td>Family logistics may include private information.</td>
+                <td>RLS, private storage, scoped tokens, consent warning, admin audit.</td>
+              </tr>
+              <tr>
+                <td>Helper token links expose too much context</td>
+                <td>One-off helpers should not see full forwarded emails, PDFs, screenshots, or the household board.</td>
+                <td>Render compact source summary and selected evidence excerpts by default; full artifacts require authenticated parent/admin access.</td>
+              </tr>
+              <tr>
+                <td>Webhook retries duplicate side effects</td>
+                <td>Provider retries can create duplicate sources, cards, responses, or analytics events.</td>
+                <td>Persist provider event ids/idempotency keys and enforce idempotent processing.</td>
+              </tr>
+              <tr>
+                <td>Simple Vercel job runner falls behind</td>
+                <td>Extraction, nudges, or weekly summaries could lag.</td>
+                <td>Use cron secret, small batches, locking, retries, stale lock recovery, visible admin job status, and upgrade if backlog grows.</td>
+              </tr>
+              <tr>
+                <td>Calendar write-back slows the core loop</td>
+                <td>The aha moment does not require write-back.</td>
+                <td>Keep connect/read/import optional in v1; write-back defaults to milestone 1.5.</td>
+              </tr>
+              <tr>
+                <td>Admin correction grows into operations tooling</td>
+                <td>That would distract from validating automation and coverage.</td>
+                <td>Gemini first pass, correction metrics, narrow admin surface, no queues or CRM behavior.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section searchable" id="metrics" data-keywords="metrics validation truth metric posthog coverage accepted declined willingness pay">
+        <div class="section-head">
+          <div>
+            <h3>Validation Metrics</h3>
+            <p class="section-intro">The metric set is aimed at deciding whether coverage relief is real, not just whether people clicked around.</p>
+          </div>
+          <span class="tag good">Product learning</span>
+        </div>
+        <div class="grid">
+          <div class="tile">
+            <h4>Truth Metric</h4>
+            <p>Did this reduce the number of times you had to ask, remind, clarify, or hold the plan in your head this week?</p>
+          </div>
+          <div class="tile">
+            <h4>Usage Signals</h4>
+            <p>Inputs sent, cards created, uncovered items found, requests sent, accepted, declined, and resolved.</p>
+          </div>
+          <div class="tile">
+            <h4>Business Signal</h4>
+            <p>Customer language and willingness to pay $8-15/month after the first accepted coverage loop.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section searchable" id="sources" data-keywords="sources docs brainstorm markdown references">
+        <div class="section-head">
+          <div>
+            <h3>Source Documents</h3>
+            <p class="section-intro">The HTML is a review layer. The markdown plan remains the source plan document.</p>
+          </div>
+        </div>
+        <div class="sources">
+          <a class="source-link" href="2026-05-19-feat-thin-real-app-plan.md">
+            Markdown implementation plan <span>docs/plans</span>
+          </a>
+          <a class="source-link" href="../brainstorms/2026-05-19-famtandem-first-product-shape-brainstorm.md">
+            Origin brainstorm <span>docs/brainstorms</span>
+          </a>
+          <a class="source-link" href="../../AGENTS.md">
+            AGENTS.md <span>project context</span>
+          </a>
+          <a class="source-link" href="../../.agents/product-marketing.md">
+            Product marketing context <span>audience and positioning</span>
+          </a>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const search = document.getElementById('search');
+    const sections = Array.from(document.querySelectorAll('.searchable'));
+
+    search.addEventListener('input', () => {
+      const query = search.value.trim().toLowerCase();
+      sections.forEach((section) => {
+        const haystack = `${section.textContent} ${section.dataset.keywords || ''}`.toLowerCase();
+        section.classList.toggle('hidden', query && !haystack.includes(query));
+      });
+    });
+
+    document.querySelectorAll('.check input').forEach((box) => {
+      box.addEventListener('change', () => {
+        const completed = document.querySelectorAll('.check input:checked').length;
+        const total = document.querySelectorAll('.check input').length;
+        document.title = completed ? `(${completed}/${total}) FamTandem Plan Review` : 'FamTandem Thin App Plan Review';
+      });
+    });
+  </script>
+</body>
+</html>

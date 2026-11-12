@@ -1,0 +1,16 @@
+.DS_Store
+/.compound-engineering/config.local.yaml
+.env
+.env*.local
+.next
+/coverage/
+node_modules
+playwright-report
+test-results
+output/
+*.tsbuildinfo
+excalidraw.log
+supabase/.branches
+supabase/.temp
+.vercel
+.env.local
